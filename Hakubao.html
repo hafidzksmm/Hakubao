@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haku Bao — Premium Dimsum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style/index.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#produk" onclick="closeMobile()">Produk</a>
+  <a href="#kenapa" onclick="closeMobile()">Kenapa Haku Bao</a>
+  <a href="#komitmen" onclick="closeMobile()">Komitmen</a>
+  <a href="https://wa.me/081514181270" target="_blank" style="color:var(--red2)">Order via WhatsApp →</a>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+        <img src="./asset/logo.jpeg" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:50%">
+    </div>
+    Haku Bao
+  </a>
+  <ul class="nav-links">
+    <li><a href="#produk">Produk</a></li>
+    <li><a href="#kenapa">Mengapa Kami</a></li>
+    <li><a href="#komitmen">Komitmen</a></li>
+  </ul>
+  <a href="https://wa.me/081514181270" target="_blank" class="nav-cta">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.856L.057 23.215a.75.75 0 00.928.928l5.36-1.477A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.681-.523-5.204-1.432l-.374-.222-3.881 1.069 1.069-3.881-.222-.374A9.951 9.951 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    Order Sekarang
+  </a>
+  <button class="hamburger" id="hamburger" onclick="toggleMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">
+      <span class="hero-tag-dot"></span>
+      Premium Handmade Dimsum
+    </div>
+    <h1>Dimsum <em>Haku Bao</em>,<br>Rasa yang Nyata</h1>
+    <p class="hero-desc">
+      Dibuat dari 95% daging ayam pilihan yang segar, tanpa bahan pengisi berlebihan. Ukuran Sedang hingga Jumbo — setiap gigitan terasa dagingnya.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/081514181270" target="_blank" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Pesan via WhatsApp
+      </a>
+      <a href="#produk" class="btn-outline">Lihat Produk</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">95%</div>
+        <div class="stat-lbl">Kandungan daging ayam</div>
+      </div>
+      <div>
+        <div class="stat-num">3×</div>
+        <div class="stat-lbl">Menu tersedia</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-lbl">Bahan pilihan premium</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <div class="hero-img-placeholder">
+        <img src="./asset/logo.jpeg" alt="hakubao" style="width:100%;height:100%;object-fit:cover;border-radius:12px">
+      </div>
+      <div class="hero-badge-float one">
+        <div>
+          <div class="hbf-label">Produk Terlaris</div>
+          <div class="hbf-val">Dimsum Mix</div>
+        </div>
+      </div>
+      <div class="hero-badge-float two">
+        <div>
+          <div class="hbf-label">Kualitas</div>
+          <div class="hbf-val">Premium Grade</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO STRIP -->
+<div class="promo-strip">
+  <div class="promo-track" id="promoTrack">
+    <span class="promo-item">Dimsum Mix Sedang</span>
+    <span class="promo-item">Dimsum Mix Jumbo</span>
+    <span class="promo-item">95% Daging Ayam</span>
+    <span class="promo-item">Bahan Premium</span>
+    <span class="promo-item">Produksi Higienis</span>
+    <span class="promo-item">Order via WhatsApp</span>
+    <span class="promo-item">Dimsum Mix Sedang</span>
+    <span class="promo-item">Dimsum Mix Jumbo</span>
+    <span class="promo-item">95% Daging Ayam</span>
+    <span class="promo-item">Bahan Premium</span>
+    <span class="promo-item">Produksi Higienis</span>
+    <span class="promo-item">Order via WhatsApp</span>
+  </div>
+</div>
+
+<!-- WHY -->
+<section class="why" id="kenapa">
+  <div class="section-tag reveal">Mengapa Haku Bao</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;margin-bottom:0">
+    <h2 class="section-title reveal" style="margin-bottom:0">Bukan Sekadar<br><em>Dimsum Biasa</em></h2>
+    <p class="section-desc reveal reveal-delay-1" style="color:rgba(253,246,238,0.6)">
+      Kami percaya dimsum yang baik dimulai dari bahan yang jujur — daging ayam segar, komposisi pas, dan proses yang terstandar.
+    </p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-card-title">95% Daging Ayam</div>
+      <div class="why-card-desc">Setiap dimsum terasa padat dan juicy karena komposisi daging yang jauh lebih tinggi dibanding produk biasa. Bukan sekadar tepung.</div>
+    </div>
+    <div class="why-card reveal reveal-delay-1">
+      <div class="why-card-title">Produksi Higienis</div>
+      <div class="why-card-desc">Diproduksi dengan standar kebersihan tinggi, peralatan bersih, dan proses yang terkontrol dari awal hingga pengemasan.</div>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <div class="why-card-title">Ukuran Sedang & Jumbo</div>
+      <div class="why-card-desc">Tersedia dalam dua pilihan ukuran untuk memenuhi semua kebutuhan — dari konsumsi pribadi hingga acara keluarga besar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="produk">
+  <div class="products-header">
+    <div>
+      <div class="section-tag reveal">Menu Kami</div>
+      <h2 class="section-title reveal">Produk <em>Unggulan</em></h2>
+    </div>
+    <a href="https://wa.me/081514181270" target="_blank" class="btn-outline reveal">Tanya via WhatsApp →</a>
+  </div>
+
+  <div class="product-grid">
+    <!-- Card 1 -->
+    <div class="product-card reveal">
+      <div class="product-card-img">
+        <span class="product-emoji" style="font-size:5.5rem"><img src="./asset/mininew.png" alt=""></span>
+        <div class="product-badge">Mini</div>
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-title">Dimsum Mix</div>
+        <div class="product-card-desc">
+          Pilihan terbaik untuk menikmati variasi dimsum dalam satu paket. Dibuat dari daging ayam segar pilihan, dibalut kulit pangsit lembut yang kenyal.
+        </div>
+        <div class="product-card-footer">
+          <div class="product-chips">
+            <span class="chip">95% Daging Ayam</span>
+            <span class="chip">Ukuran Mini</span>
+          </div>
+          <a href="https://wa.me/081514181270" target="_blank" class="product-order-btn">Order</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-card-img">
+        <span class="product-emoji" style="font-size:5.5rem"><img src="./asset/Jumbonew.png" alt=""></span>
+        <div class="product-badge jumbo">Jumbo</div>
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-title">Dimsum Mix Jumbo</div>
+        <div class="product-card-desc">
+          Versi jumbo yang lebih besar dan lebih memuaskan. Cocok untuk keluarga atau saat ingin menikmati dimsum premium yang benar-benar mengenyangkan.
+        </div>
+        <div class="product-card-footer">
+          <div class="product-chips">
+            <span class="chip">95% Ayam</span>
+            <span class="chip">Ukuran Jumbo</span>
+            <span class="chip">Best Seller</span>
+          </div>
+          <a href="https://wa.me/081514181270" target="_blank" class="product-order-btn">Order</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-card-img">
+        <span class="product-emoji" style="font-size:5.5rem"><img src="./asset/dimsumkejunew.png" alt=""></span>
+        <div class="product-badge jumbo">Dimsum Keju</div>
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-title">Dimsum Keju</div>
+        <div class="product-card-desc">
+          Dimsum dengan rasa keju yang lezat dan menggugah selera. Cocok untuk pencinta makanan berkuah dan memiliki tekstur yang unik.
+        </div>
+        <div class="product-card-footer">
+          <div class="product-chips">
+            <span class="chip">95% Ayam</span>
+            <span class="chip">Ukuran Jumbo</span>
+            <span class="chip">Keju Lumer</span>
+          </div>
+          <a href="https://wa.me/081514181270" target="_blank" class="product-order-btn">Order</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMITMENT -->
+<section class="commitment" id="komitmen">
+  <div class="commit-inner">
+    <div class="commit-visual reveal">
+      <div class="commit-img-big"><img src="./asset/kompromi.png" alt="kompromi"></div>
+      <div class="commit-pill">
+        <div class="commit-pill-num">95%</div>
+        <div class="commit-pill-lbl">Kandungan Daging Ayam</div>
+      </div>
+    </div>
+    <div class="commit-text">
+      <div class="section-tag reveal">Komitmen Kami</div>
+      <h2 class="section-title reveal">Kualitas yang<br><em>Tidak Kami Kompromikan</em></h2>
+      <p class="section-desc reveal">
+        Haku Bao hadir dengan komitmen untuk menghadirkan dimsum yang benar-benar berkualitas — bukan hanya soal rasa, tapi juga bahan, proses, dan kepedulian terhadap setiap pelanggan.
+      </p>
+      <div class="commit-list">
+        <div class="commit-item reveal">
+          <div class="commit-item-icon">🌾</div>
+          <div>
+            <div class="commit-item-title">Bahan Baku Terpilih</div>
+            <div class="commit-item-desc">Daging ayam segar, kulit pangsit terbaik, dan sayuran berkualitas diseleksi dengan standar ketat setiap harinya.</div>
+          </div>
+        </div>
+        <div class="commit-item reveal reveal-delay-1">
+          <div class="commit-item-icon">✅</div>
+          <div>
+            <div class="commit-item-title">Rasa yang Konsisten</div>
+            <div class="commit-item-desc">Setiap batch diproduksi dengan takaran yang sama dan proses terstandar agar kualitas rasa selalu terjaga.</div>
+          </div>
+        </div>
+        <div class="commit-item reveal reveal-delay-2">
+          <div class="commit-item-icon">💚</div>
+          <div>
+            <div class="commit-item-title">Kepuasan Pelanggan</div>
+            <div class="commit-item-desc">Kami menerima masukan dan terus berinovasi agar setiap pelanggan puas dengan setiap pembelian.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-tag reveal" style="justify-content:center">Pesan Sekarang</div>
+  <h2 class="section-title reveal">Siap Mencoba<br><em>Dimsum Terbaik?</em></h2>
+  <p class="section-desc reveal">
+    Chat langsung dengan kami via WhatsApp untuk pemesanan, informasi produk, atau pertanyaan apapun. Kami siap melayani!
+  </p>
+  <a href="https://wa.me/081514181270" target="_blank" class="cta-wa reveal">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.856L.057 23.215a.75.75 0 00.928.928l5.36-1.477A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.681-.523-5.204-1.432l-.374-.222-3.881 1.069 1.069-3.881-.222-.374A9.951 9.951 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    Pesan via WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-mark">
+        <img src="./asset/logo.jpeg" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:50%">
+        </div>
+        Haku Bao
+      </a>
+      <p class="footer-tagline">Premium dimsum dengan 95% daging ayam pilihan. Rasa yang nyata, kualitas yang terjaga.</p>
+    </div>
+    <div>
+      <div class="footer-heading">Menu</div>
+      <ul class="footer-links">
+        <li><a href="#produk">Dimsum Mini</a></li>
+        <li><a href="#produk">Dimsum Mix Jumbo</a></li>
+        <li><a href="#produk">Dimsum Keju</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Hubungi Kami</div>
+      <ul class="footer-links">
+        <li><a href="https://wa.me/081514181270" target="_blank">WhatsApp Order</a></li>
+        <li><a href="#komitmen">Tentang Haku Bao</a></li>
+        <li><a href="#kenapa">Mengapa Kami</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Haku Bao. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Mobile menu
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Hero stats counter animation
+function animateCounter(el, target, suffix='') {
+  let current = 0;
+  const duration = 1800;
+  const start = performance.now();
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    current = Math.round(ease * target);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const nums = e.target.querySelectorAll('.stat-num');
+      const targets = [95, 3, 100];
+      const suffixes = ['%', '×', '%'];
+      nums.forEach((el, i) => animateCounter(el, targets[i], suffixes[i]));
+      statObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+const statsEl = document.querySelector('.hero-stats');
+if (statsEl) statObserver.observe(statsEl);
+</script>
+</body>
+</html>

@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FileWave — Konversi File Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --surface: #1e1e2e;
+    --surface2: #252538;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0f0f8;
+    --text2: #9898b8;
+    --text3: #6060a0;
+    --accent: #7c6dfa;
+    --accent2: #a594fb;
+    --accent-glow: rgba(124,109,250,0.25);
+    --green: #22d07a;
+    --green-dim: rgba(34,208,122,0.15);
+    --red: #ff5b6a;
+    --red-dim: rgba(255,91,106,0.15);
+    --amber: #ffb547;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* BG decoration */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 500px;
+    background: radial-gradient(ellipse, rgba(124,109,250,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem; font-weight: 800;
+    color: var(--text);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), #b08ef5);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-icon svg { width: 18px; height: 18px; fill: white; }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text2); text-decoration: none;
+    font-size: 0.9rem; font-weight: 400;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: white; border: none;
+    padding: 8px 20px; border-radius: 8px;
+    font-family: var(--font-body); font-size: 0.875rem; font-weight: 500;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 80px 2rem 60px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: 100px; padding: 5px 14px;
+    font-size: 0.8rem; color: var(--text2);
+    margin-bottom: 28px;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; } 50% { opacity: 0.4; }
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800; line-height: 1.1;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #fff 40%, var(--accent2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 1.1rem; color: var(--text2);
+    max-width: 500px; margin: 0 auto 50px;
+    line-height: 1.7; font-weight: 300;
+  }
+
+  /* TOOL GRID */
+  .tools-section {
+    position: relative; z-index: 1;
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 2rem 80px;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+    position: relative; overflow: hidden;
+  }
+  .tool-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .tool-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .tool-card:hover::before { opacity: 1; }
+
+  .tool-card.purple::before { background: radial-gradient(circle at top left, rgba(124,109,250,0.08), transparent 60%); }
+  .tool-card.green::before { background: radial-gradient(circle at top left, rgba(34,208,122,0.08), transparent 60%); }
+  .tool-card.amber::before { background: radial-gradient(circle at top left, rgba(255,181,71,0.08), transparent 60%); }
+  .tool-card.red::before { background: radial-gradient(circle at top left, rgba(255,91,106,0.08), transparent 60%); }
+  .tool-card.blue::before { background: radial-gradient(circle at top left, rgba(56,182,255,0.08), transparent 60%); }
+
+  .tool-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .tool-icon svg { width: 22px; height: 22px; }
+
+  .icon-purple { background: rgba(124,109,250,0.15); color: var(--accent2); }
+  .icon-green { background: rgba(34,208,122,0.15); color: var(--green); }
+  .icon-amber { background: rgba(255,181,71,0.15); color: var(--amber); }
+  .icon-red { background: rgba(255,91,106,0.15); color: var(--red); }
+  .icon-blue { background: rgba(56,182,255,0.15); color: #38b6ff; }
+
+  .tool-name {
+    font-family: var(--font-display);
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--text); line-height: 1.3;
+  }
+  .tool-desc {
+    font-size: 0.8rem; color: var(--text2); line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* CONVERTER MODAL / PAGE */
+  .converter-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  .converter-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
+
+  .converter-box {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    width: 100%; max-width: 680px;
+    margin: auto;
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .converter-header {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .converter-header-left { display: flex; align-items: center; gap: 14px; }
+  .converter-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem; font-weight: 700;
+  }
+  .converter-subtitle { font-size: 0.85rem; color: var(--text2); margin-top: 2px; }
+
+  .close-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text2); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .close-btn:hover { background: var(--surface2); color: var(--text); }
+  .close-btn svg { width: 16px; height: 16px; }
+
+  .converter-body { padding: 28px 32px; }
+
+  /* DROP ZONE */
+  .drop-zone {
+    border: 2px dashed var(--border2);
+    border-radius: var(--radius);
+    padding: 50px 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: var(--accent);
+    background: rgba(124,109,250,0.04);
+  }
+  .drop-zone input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+  }
+  .drop-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--surface); border: 1px solid var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .drop-icon svg { width: 26px; height: 26px; color: var(--accent2); }
+  .drop-title { font-size: 1rem; font-weight: 500; margin-bottom: 6px; }
+  .drop-hint { font-size: 0.82rem; color: var(--text3); }
+  .drop-formats {
+    display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .format-badge {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 3px 10px;
+    font-size: 0.75rem; font-weight: 500; color: var(--text2);
+    font-family: monospace;
+  }
+
+  /* FILE LIST */
+  .file-list { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .file-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .file-thumb {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.7rem; font-weight: 700;
+    font-family: monospace; letter-spacing: 0.05em;
+  }
+  .file-info { flex: 1; min-width: 0; }
+  .file-name {
+    font-size: 0.875rem; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .file-size { font-size: 0.75rem; color: var(--text3); margin-top: 2px; }
+  .file-remove {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: none; border: 1px solid var(--border);
+    color: var(--text3); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .file-remove:hover { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+  .file-remove svg { width: 14px; height: 14px; }
+
+  /* OPTIONS */
+  .options-row {
+    margin-top: 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .options-row label {
+    font-size: 0.875rem; color: var(--text2); font-weight: 400; flex-shrink: 0;
+  }
+  .format-select {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-sm);
+    color: var(--text); font-family: var(--font-body);
+    font-size: 0.9rem; padding: 10px 14px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239898b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+  }
+  .format-select:focus { outline: none; border-color: var(--accent); }
+
+  /* QUALITY SLIDER */
+  .quality-row {
+    margin-top: 16px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .quality-row label { font-size: 0.875rem; color: var(--text2); flex-shrink: 0; }
+  .quality-slider {
+    flex: 1; -webkit-appearance: none;
+    height: 4px; border-radius: 4px;
+    background: var(--surface2);
+    outline: none; cursor: pointer;
+  }
+  .quality-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); cursor: pointer;
+    border: 2px solid var(--bg);
+  }
+  .quality-val {
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--accent2); min-width: 36px; text-align: right;
+  }
+
+  /* CONVERT BTN */
+  .convert-btn {
+    margin-top: 28px; width: 100%;
+    background: linear-gradient(135deg, var(--accent), #9b8cfc);
+    color: white; border: none;
+    padding: 14px; border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .convert-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(124,109,250,0.35); }
+  .convert-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+  .convert-btn svg { width: 18px; height: 18px; }
+
+  /* PROGRESS */
+  .progress-section { margin-top: 20px; display: none; }
+  .progress-bar-wrap {
+    background: var(--surface); border-radius: 100px;
+    height: 6px; overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 0.8rem; color: var(--text2);
+    margin-top: 8px; display: flex; justify-content: space-between;
+  }
+
+  /* RESULT */
+  .result-section {
+    display: none; margin-top: 20px;
+    background: var(--green-dim);
+    border: 1px solid rgba(34,208,122,0.2);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    display: none; align-items: center; gap: 14px;
+  }
+  .result-section.show { display: flex; }
+  .result-icon { color: var(--green); flex-shrink: 0; }
+  .result-icon svg { width: 24px; height: 24px; }
+  .result-info { flex: 1; }
+  .result-filename { font-size: 0.9rem; font-weight: 500; }
+  .result-meta { font-size: 0.78rem; color: var(--text2); margin-top: 2px; }
+  .download-btn {
+    background: var(--green); color: #0a2e1a;
+    border: none; padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: opacity 0.2s;
+    display: flex; align-items: center; gap: 6px; white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .download-btn:hover { opacity: 0.85; }
+  .download-btn svg { width: 14px; height: 14px; }
+
+  /* ERROR */
+  .error-msg {
+    margin-top: 12px; padding: 12px 16px;
+    background: var(--red-dim); border: 1px solid rgba(255,91,106,0.2);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem; color: var(--red);
+    display: none;
+  }
+  .error-msg.show { display: block; }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text3);
+    margin-bottom: 16px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 2rem;
+    text-align: center;
+    color: var(--text3); font-size: 0.85rem;
+  }
+  footer strong { color: var(--text2); }
+
+  /* STATS BAR */
+  .stats-bar {
+    position: relative; z-index: 1;
+    max-width: 1100px; margin: 0 auto 60px;
+    padding: 0 2rem;
+    display: flex; justify-content: center; gap: 0;
+  }
+  .stat-item {
+    padding: 24px 48px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    text-align: center;
+  }
+  .stat-item:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+  .stat-item:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+  .stat-item + .stat-item { border-left: none; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 1.8rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--text), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-lbl { font-size: 0.8rem; color: var(--text3); margin-top: 4px; }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .hero { padding: 50px 1rem 40px; }
+    .tools-section { padding: 0 1rem 50px; }
+    .tools-grid { grid-template-columns: 1fr 1fr; }
+    .stats-bar { flex-direction: column; align-items: center; }
+    .stat-item { width: 100%; border: 1px solid var(--border) !important; border-radius: var(--radius) !important; }
+    .stat-item + .stat-item { border-top: none !important; border-radius: 0 !important; }
+    .converter-body { padding: 20px; }
+    .options-row { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 13h8v1.5H8V13zm0 3h5v1.5H8V16zm0-6h2v1.5H8V10z"/></svg>
+    </div>
+    FileWave
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Konversi</a></li>
+    <li><a href="#">Kompres</a></li>
+    <li><a href="#">Edit</a></li>
+    <li><a href="#">Tentang</a></li>
+  </ul>
+  <button class="nav-cta">Mulai Gratis</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Gratis · Tanpa registrasi · Aman
+  </div>
+  <h1>Konversi File<br>dengan Mudah</h1>
+  <p>Ubah file PDF, gambar, dokumen, dan audio ke format apapun — langsung di browser, tanpa upload ke server.</p>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">20+</div>
+    <div class="stat-lbl">Format didukung</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100%</div>
+    <div class="stat-lbl">Di browser, privat</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">0 Rp</div>
+    <div class="stat-lbl">Selamanya gratis</div>
+  </div>
+</div>
+
+<!-- TOOLS GRID -->
+<div class="tools-section">
+  <p class="section-label">Semua Alat Konversi</p>
+  <div class="tools-grid" id="toolsGrid">
+    <!-- populated by JS -->
+  </div>
+</div>
+
+<!-- CONVERTER OVERLAY -->
+<div class="converter-overlay" id="converterOverlay">
+  <div class="converter-box" id="converterBox">
+    <div class="converter-header">
+      <div class="converter-header-left">
+        <div class="tool-icon" id="cvIcon"></div>
+        <div>
+          <div class="converter-title" id="cvTitle">Konverter</div>
+          <div class="converter-subtitle" id="cvSubtitle"></div>
+        </div>
+      </div>
+      <button class="close-btn" onclick="closeConverter()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="converter-body">
+      <!-- Drop zone -->
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" multiple>
+        <div class="drop-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 16V4m0 0L8 8m4-4l4 4M4 20h16"/>
+          </svg>
+        </div>
+        <div class="drop-title">Seret & lepas file di sini</div>
+        <div class="drop-hint">atau klik untuk memilih file</div>
+        <div class="drop-formats" id="dropFormats"></div>
+      </div>
+
+      <!-- File list -->
+      <div class="file-list" id="fileList"></div>
+
+      <!-- Options -->
+      <div class="options-row" id="optionsRow" style="display:none">
+        <label>Konversi ke</label>
+        <select class="format-select" id="outputFormat"></select>
+      </div>
+
+      <!-- Quality (for images) -->
+      <div class="quality-row" id="qualityRow" style="display:none">
+        <label>Kualitas</label>
+        <input type="range" class="quality-slider" id="qualitySlider" min="10" max="100" value="90">
+        <span class="quality-val" id="qualityVal">90%</span>
+      </div>
+
+      <!-- Convert button -->
+      <button class="convert-btn" id="convertBtn" disabled onclick="doConvert()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        Konversi Sekarang
+      </button>
+
+      <!-- Progress -->
+      <div class="progress-section" id="progressSection">
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+        <div class="progress-label">
+          <span id="progressText">Memproses...</span>
+          <span id="progressPct">0%</span>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div class="error-msg" id="errorMsg"></div>
+
+      <!-- Result -->
+      <div class="result-section" id="resultSection">
+        <div class="result-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="result-info">
+          <div class="result-filename" id="resultFilename"></div>
+          <div class="result-meta" id="resultMeta"></div>
+        </div>
+        <button class="download-btn" id="downloadBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16l-4-4h3V4h2v8h3l-4 4zM4 20h16v-2H4v2z"/></svg>
+          Unduh
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Dibuat dengan ❤️ — <strong>FileWave</strong> · Semua konversi dilakukan langsung di browser Anda. File Anda tidak pernah meninggalkan perangkat.
+</footer>
+
+<script>
+const TOOLS = [
+  {
+    id: 'img-to-jpg',
+    name: 'Gambar ke JPG',
+    desc: 'Konversi PNG, WebP, BMP ke JPG',
+    color: 'purple', iconColor: 'icon-purple',
+    category: 'image', inputFormats: ['image/*'],
+    inputExts: ['.png','.webp','.bmp','.gif','.tiff'],
+    outputFormats: ['JPG','PNG','WebP'],
+    hasQuality: true,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`
+  },
+  {
+    id: 'pdf-to-jpg',
+    name: 'PDF ke Gambar',
+    desc: 'Ekstrak halaman PDF menjadi gambar',
+    color: 'red', iconColor: 'icon-red',
+    category: 'pdf-out',
+    inputFormats: ['application/pdf'], inputExts: ['.pdf'],
+    outputFormats: ['JPG','PNG'],
+    hasQuality: true,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h5"/></svg>`
+  },
+  {
+    id: 'img-to-pdf',
+    name: 'Gambar ke PDF',
+    desc: 'Gabungkan gambar menjadi satu PDF',
+    color: 'amber', iconColor: 'icon-amber',
+    category: 'to-pdf',
+    inputFormats: ['image/*'], inputExts: ['.jpg','.jpeg','.png','.webp'],
+    outputFormats: ['PDF'],
+    hasQuality: false,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><polyline points="14 2 14 8 20 8"/><path d="M8 10h.01M8 14h8M8 18h5"/></svg>`
+  },
+  {
+    id: 'compress-img',
+    name: 'Kompres Gambar',
+    desc: 'Kurangi ukuran file gambar',
+    color: 'green', iconColor: 'icon-green',
+    category: 'compress-img',
+    inputFormats: ['image/*'], inputExts: ['.jpg','.jpeg','.png','.webp'],
+    outputFormats: ['JPG','PNG','WebP'],
+    hasQuality: true,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="8 6 2 12 8 18"/><polyline points="16 6 22 12 16 18"/></svg>`
+  },
+  {
+    id: 'txt-to-pdf',
+    name: 'Teks ke PDF',
+    desc: 'Buat PDF dari file teks biasa',
+    color: 'blue', iconColor: 'icon-blue',
+    category: 'text-to-pdf',
+    inputFormats: ['.txt', 'text/plain'], inputExts: ['.txt'],
+    outputFormats: ['PDF'],
+    hasQuality: false,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>`
+  },
+  {
+    id: 'svg-to-png',
+    name: 'SVG ke PNG',
+    desc: 'Render SVG vektor ke PNG raster',
+    color: 'purple', iconColor: 'icon-purple',
+    category: 'svg-to-img',
+    inputFormats: ['image/svg+xml', '.svg'], inputExts: ['.svg'],
+    outputFormats: ['PNG','JPG'],
+    hasQuality: true,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`
+  },
+  {
+    id: 'resize-img',
+    name: 'Resize Gambar',
+    desc: 'Ubah ukuran gambar dengan cepat',
+    color: 'amber', iconColor: 'icon-amber',
+    category: 'resize',
+    inputFormats: ['image/*'], inputExts: ['.jpg','.jpeg','.png','.webp'],
+    outputFormats: ['JPG','PNG','WebP'],
+    hasQuality: true,
+    hasResize: true,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>`
+  },
+  {
+    id: 'grayscale',
+    name: 'Grayscale',
+    desc: 'Ubah gambar menjadi hitam putih',
+    color: 'green', iconColor: 'icon-green',
+    category: 'filter',
+    inputFormats: ['image/*'], inputExts: ['.jpg','.jpeg','.png','.webp'],
+    outputFormats: ['JPG','PNG'],
+    hasQuality: true,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 000 20V2z"/></svg>`
+  },
+];
+
+// Render tool cards
+const grid = document.getElementById('toolsGrid');
+TOOLS.forEach(t => {
+  const card = document.createElement('div');
+  card.className = `tool-card ${t.color}`;
+  card.innerHTML = `
+    <div class="tool-icon ${t.iconColor}">${t.icon}</div>
+    <div>
+      <div class="tool-name">${t.name}</div>
+      <div class="tool-desc">${t.desc}</div>
+    </div>
+  `;
+  card.onclick = () => openConverter(t);
+  grid.appendChild(card);
+});
+
+// State
+let currentTool = null;
+let selectedFiles = [];
+let resultUrl = null;
+let resultFilename = '';
+
+function openConverter(tool) {
+  currentTool = tool;
+  selectedFiles = [];
+  resultUrl = null;
+  document.getElementById('fileList').innerHTML = '';
+  document.getElementById('progressSection').style.display = 'none';
+  document.getElementById('resultSection').classList.remove('show');
+  document.getElementById('errorMsg').classList.remove('show');
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('convertBtn').disabled = true;
+  document.getElementById('optionsRow').style.display = 'none';
+  document.getElementById('qualityRow').style.display = 'none';
+
+  // Set icon
+  const icon = document.getElementById('cvIcon');
+  icon.className = `tool-icon ${tool.iconColor}`;
+  icon.innerHTML = tool.icon;
+
+  // Title
+  document.getElementById('cvTitle').textContent = tool.name;
+  document.getElementById('cvSubtitle').textContent = tool.desc;
+
+  // Output formats
+  const sel = document.getElementById('outputFormat');
+  sel.innerHTML = '';
+  tool.outputFormats.forEach(f => {
+    const o = document.createElement('option');
+    o.value = f; o.textContent = f;
+    sel.appendChild(o);
+  });
+
+  // Accepted formats
+  document.getElementById('fileInput').accept = tool.inputFormats.join(',');
+  const df = document.getElementById('dropFormats');
+  df.innerHTML = tool.inputExts.map(e => `<span class="format-badge">${e}</span>`).join('');
+
+  // Extra UI
+  if (tool.hasResize) {
+    document.getElementById('qualityRow').style.display = 'flex';
+  }
+
+  document.getElementById('converterOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeConverter() {
+  document.getElementById('converterOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+  if (resultUrl) URL.revokeObjectURL(resultUrl);
+}
+
+document.getElementById('converterOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('converterOverlay')) closeConverter();
+});
+
+// Drag & drop
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); handleFiles(Array.from(e.dataTransfer.files)); });
+
+document.getElementById('fileInput').addEventListener('change', e => {
+  handleFiles(Array.from(e.target.files));
+  e.target.value = '';
+});
+
+function handleFiles(files) {
+  files.forEach(f => { if (!selectedFiles.find(x => x.name === f.name)) selectedFiles.push(f); });
+  renderFileList();
+}
+
+function renderFileList() {
+  const list = document.getElementById('fileList');
+  list.innerHTML = '';
+  selectedFiles.forEach((f, i) => {
+    const ext = f.name.split('.').pop().toUpperCase();
+    const colors = {JPG:'#fa7c6d',PNG:'#6db5fa',PDF:'#fa6d6d',SVG:'#a094fb',TXT:'#6dfac7',WEBP:'#fbbd6d',GIF:'#f06dfa'};
+    const col = colors[ext] || '#9898b8';
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.innerHTML = `
+      <div class="file-thumb" style="color:${col}; border: 1px solid ${col}22;">${ext}</div>
+      <div class="file-info">
+        <div class="file-name">${f.name}</div>
+        <div class="file-size">${formatSize(f.size)}</div>
+      </div>
+      <button class="file-remove" onclick="removeFile(${i})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    `;
+    list.appendChild(item);
+  });
+
+  const hasFiles = selectedFiles.length > 0;
+  document.getElementById('convertBtn').disabled = !hasFiles;
+  document.getElementById('optionsRow').style.display = hasFiles ? 'flex' : 'none';
+  if (currentTool?.hasQuality) document.getElementById('qualityRow').style.display = hasFiles ? 'flex' : 'none';
+}
+
+function removeFile(i) { selectedFiles.splice(i, 1); renderFileList(); }
+
+const qs = document.getElementById('qualitySlider');
+const qv = document.getElementById('qualityVal');
+qs.addEventListener('input', () => qv.textContent = qs.value + '%');
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1024/1024).toFixed(1) + ' MB';
+}
+
+function showProgress(pct, text) {
+  document.getElementById('progressSection').style.display = 'block';
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = text;
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg; el.classList.add('show');
+}
+
+function animateProgress(from, to, duration, text) {
+  return new Promise(resolve => {
+    const start = Date.now();
+    function step() {
+      const elapsed = Date.now() - start;
+      const pct = Math.min(from + (to - from) * (elapsed / duration), to);
+      showProgress(Math.round(pct), text);
+      if (pct < to) requestAnimationFrame(step);
+      else resolve();
+    }
+    step();
+  });
+}
+
+async function doConvert() {
+  if (!selectedFiles.length || !currentTool) return;
+
+  document.getElementById('convertBtn').disabled = true;
+  document.getElementById('errorMsg').classList.remove('show');
+  document.getElementById('resultSection').classList.remove('show');
+  if (resultUrl) { URL.revokeObjectURL(resultUrl); resultUrl = null; }
+
+  const outputFmt = document.getElementById('outputFormat').value;
+  const quality = parseInt(document.getElementById('qualitySlider').value) / 100;
+  const file = selectedFiles[0];
+
+  try {
+    showProgress(0, 'Memulai konversi...');
+    await animateProgress(0, 30, 400, 'Membaca file...');
+
+    let blob, filename;
+
+    // CATEGORY ROUTING
+    const cat = currentTool.category;
+
+    if (cat === 'image' || cat === 'compress-img' || cat === 'filter') {
+      ({ blob, filename } = await convertImage(file, outputFmt, quality, cat));
+    } else if (cat === 'to-pdf') {
+      ({ blob, filename } = await imageToPdf(file));
+    } else if (cat === 'pdf-out') {
+      ({ blob, filename } = await pdfToImage(file, outputFmt, quality));
+    } else if (cat === 'text-to-pdf') {
+      ({ blob, filename } = await textToPdf(file));
+    } else if (cat === 'svg-to-img') {
+      ({ blob, filename } = await svgToImage(file, outputFmt, quality));
+    } else if (cat === 'resize') {
+      ({ blob, filename } = await resizeImage(file, outputFmt, quality));
+    } else {
+      throw new Error('Fitur ini belum tersedia.');
+    }
+
+    await animateProgress(80, 100, 300, 'Selesai!');
+
+    resultUrl = URL.createObjectURL(blob);
+    resultFilename = filename;
+
+    document.getElementById('resultFilename').textContent = filename;
+    document.getElementById('resultMeta').textContent = `${formatSize(blob.size)} · ${outputFmt}`;
+    document.getElementById('resultSection').classList.add('show');
+
+    document.getElementById('downloadBtn').onclick = () => {
+      const a = document.createElement('a');
+      a.href = resultUrl; a.download = resultFilename; a.click();
+    };
+
+  } catch (err) {
+    showError('Gagal: ' + (err.message || 'Terjadi kesalahan'));
+    document.getElementById('progressSection').style.display = 'none';
+  } finally {
+    document.getElementById('convertBtn').disabled = false;
+  }
+}
+
+// ---- CONVERTERS ----
+
+function readFileAsDataURL(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader(); r.onload = e => res(e.target.result); r.onerror = rej; r.readAsDataURL(file);
+  });
+}
+function readFileAsText(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader(); r.onload = e => res(e.target.result); r.onerror = rej; r.readAsText(file);
+  });
+}
+function readFileAsArrayBuffer(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader(); r.onload = e => res(e.target.result); r.onerror = rej; r.readAsArrayBuffer(file);
+  });
+}
+
+function loadImage(src) {
+  return new Promise((res, rej) => {
+    const img = new Image(); img.onload = () => res(img); img.onerror = rej; img.src = src;
+  });
+}
+
+function canvasToBlob(canvas, mime, quality) {
+  return new Promise((res, rej) => {
+    canvas.toBlob(b => b ? res(b) : rej(new Error('Gagal encode gambar')), mime, quality);
+  });
+}
+
+function mimeFromFmt(fmt) {
+  return { JPG:'image/jpeg', PNG:'image/png', WebP:'image/webp', PDF:'application/pdf' }[fmt] || 'application/octet-stream';
+}
+function extFromFmt(fmt) {
+  return { JPG:'jpg', PNG:'png', WebP:'webp', PDF:'pdf' }[fmt] || fmt.toLowerCase();
+}
+
+async function convertImage(file, outputFmt, quality, cat) {
+  await animateProgress(30, 60, 500, 'Mengonversi gambar...');
+  const src = await readFileAsDataURL(file);
+  const img = await loadImage(src);
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width; canvas.height = img.height;
+  const ctx = canvas.getContext('2d');
+
+  if (outputFmt === 'JPG') { ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height); }
+  ctx.drawImage(img, 0, 0);
+
+  if (cat === 'filter') {
+    const id = ctx.getImageData(0,0,canvas.width,canvas.height);
+    for (let i=0; i<id.data.length; i+=4) {
+      const g = 0.299*id.data[i]+0.587*id.data[i+1]+0.114*id.data[i+2];
+      id.data[i]=id.data[i+1]=id.data[i+2]=g;
+    }
+    ctx.putImageData(id,0,0);
+  }
+
+  await animateProgress(60, 80, 300, 'Menyimpan...');
+  const mime = mimeFromFmt(outputFmt);
+  const blob = await canvasToBlob(canvas, mime, quality);
+  const base = file.name.replace(/\.[^.]+$/, '');
+  return { blob, filename: `${base}.${extFromFmt(outputFmt)}` };
+}
+
+async function imageToPdf(file) {
+  await animateProgress(30, 70, 600, 'Membuat PDF...');
+  const src = await readFileAsDataURL(file);
+  const img = await loadImage(src);
+  const w = img.width, h = img.height;
+
+  // A4 72dpi-ish
+  const pxW = Math.min(w, 595*2), pxH = Math.round(pxW * (h/w));
+
+  const canvas = document.createElement('canvas');
+  canvas.width = pxW; canvas.height = pxH;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,pxW,pxH);
+  ctx.drawImage(img, 0,0,pxW,pxH);
+  const jpgData = canvas.toDataURL('image/jpeg', 0.92);
+
+  // Minimal PDF by hand
+  const pdf = buildMinimalPdf(jpgData.split(',')[1], pxW, pxH);
+  const blob = new Blob([pdf], { type: 'application/pdf' });
+  const base = file.name.replace(/\.[^.]+$/, '');
+  return { blob, filename: `${base}.pdf` };
+}
+
+function buildMinimalPdf(b64img, wPx, hPx) {
+  const dpi = 96;
+  const ptW = Math.round(wPx / dpi * 72);
+  const ptH = Math.round(hPx / dpi * 72);
+  const imgBytes = atob(b64img);
+  const len = imgBytes.length;
+
+  let offsets = [], offset = 0;
+  const parts = [];
+
+  function add(str) { const b = new TextEncoder().encode(str); parts.push(b); offset += b.length; }
+  function addBinary(ab) { const u = new Uint8Array(ab); parts.push(u); offset += u.length; }
+
+  const header = '%PDF-1.4\n';
+  parts.push(new TextEncoder().encode(header));
+  offset += header.length;
+
+  // obj 1: catalog
+  offsets[1] = offset;
+  add('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+
+  // obj 2: pages
+  offsets[2] = offset;
+  add('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
+
+  // obj 3: page
+  offsets[3] = offset;
+  add(`3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${ptW} ${ptH}] /Contents 4 0 R /Resources << /XObject << /Im1 5 0 R >> >> >>\nendobj\n`);
+
+  // obj 4: content stream
+  const stream = `q ${ptW} 0 0 ${ptH} 0 0 cm /Im1 Do Q`;
+  offsets[4] = offset;
+  add(`4 0 obj\n<< /Length ${stream.length} >>\nstream\n${stream}\nendstream\nendobj\n`);
+
+  // obj 5: image xobject
+  offsets[5] = offset;
+  add(`5 0 obj\n<< /Type /XObject /Subtype /Image /Width ${wPx} /Height ${hPx} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${len} >>\nstream\n`);
+  // binary image data
+  const imgArr = new Uint8Array(len);
+  for (let i=0;i<len;i++) imgArr[i] = imgBytes.charCodeAt(i);
+  parts.push(imgArr); offset += len;
+  add('\nendstream\nendobj\n');
+
+  // xref
+  const xrefOffset = offset;
+  add(`xref\n0 6\n0000000000 65535 f \n`);
+  for (let i=1;i<=5;i++) add(offsets[i].toString().padStart(10,'0') + ' 00000 n \n');
+  add(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`);
+
+  const total = parts.reduce((s,p)=>s+p.length,0);
+  const out = new Uint8Array(total);
+  let pos = 0;
+  for (const p of parts) { out.set(p, pos); pos += p.length; }
+  return out;
+}
+
+async function textToPdf(file) {
+  await animateProgress(30, 70, 400, 'Membuat PDF dari teks...');
+  const text = await readFileAsText(file);
+  const lines = text.split('\n');
+
+  const ptW = 595, ptH = 842, margin = 50, lineH = 16, fontSize = 11;
+  const usableH = ptH - 2*margin;
+  const linesPerPage = Math.floor(usableH / lineH);
+
+  // Build PDF with multiple pages
+  const pages = [];
+  for (let i=0; i<lines.length; i+=linesPerPage) pages.push(lines.slice(i,i+linesPerPage));
+  if (pages.length === 0) pages.push([]);
+
+  const streamParts = pages.map((pageLines,pi) => {
+    let s = `BT /F1 ${fontSize} Tf\n`;
+    pageLines.forEach((line, li) => {
+      const y = ptH - margin - li*lineH;
+      const safe = (line || ' ').replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)');
+      s += `${margin} ${y} Td (${safe}) Tj T*\n`;
+    });
+    s += 'ET';
+    return s;
+  });
+
+  let offset = 0, offsets = {}, parts = [];
+  const enc = new TextEncoder();
+  function add(str) { const b = enc.encode(str); parts.push(b); offset += b.length; return str.length; }
+
+  add('%PDF-1.4\n');
+
+  // obj 1 catalog, 2 pages node
+  offsets[1] = offset; add('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+  const pageRefs = pages.map((_,i) => `${3+i*2} 0 R`).join(' ');
+  offsets[2] = offset; add(`2 0 obj\n<< /Type /Pages /Kids [${pageRefs}] /Count ${pages.length} >>\nendobj\n`);
+
+  pages.forEach((pg, i) => {
+    const pageObj = 3 + i*2;
+    const contObj = 4 + i*2;
+    offsets[pageObj] = offset;
+    add(`${pageObj} 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${ptW} ${ptH}] /Contents ${contObj} 0 R /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> >> >> >>\nendobj\n`);
+    const s = streamParts[i];
+    offsets[contObj] = offset;
+    add(`${contObj} 0 obj\n<< /Length ${enc.encode(s).length} >>\nstream\n${s}\nendstream\nendobj\n`);
+  });
+
+  const totalObjs = 2 + pages.length*2;
+  const xref = offset;
+  add(`xref\n0 ${totalObjs+1}\n0000000000 65535 f \n`);
+  for (let i=1;i<=totalObjs;i++) add((offsets[i]||0).toString().padStart(10,'0')+' 00000 n \n');
+  add(`trailer\n<< /Size ${totalObjs+1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+
+  const total = parts.reduce((s,p)=>s+p.length,0);
+  const out = new Uint8Array(total);
+  let pos=0; for (const p of parts){out.set(p,pos);pos+=p.length;}
+  const blob = new Blob([out],{type:'application/pdf'});
+  const base = file.name.replace(/\.[^.]+$/,'');
+  return { blob, filename: `${base}.pdf` };
+}
+
+async function svgToImage(file, outputFmt, quality) {
+  await animateProgress(30, 60, 400, 'Merender SVG...');
+  const src = await readFileAsDataURL(file);
+  const img = await loadImage(src);
+  const canvas = document.createElement('canvas');
+  canvas.width = img.naturalWidth || 800; canvas.height = img.naturalHeight || 600;
+  const ctx = canvas.getContext('2d');
+  if (outputFmt === 'JPG') { ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); }
+  ctx.drawImage(img,0,0);
+  await animateProgress(60,80,200,'Menyimpan...');
+  const blob = await canvasToBlob(canvas, mimeFromFmt(outputFmt), quality);
+  const base = file.name.replace(/\.[^.]+$/,'');
+  return { blob, filename: `${base}.${extFromFmt(outputFmt)}` };
+}
+
+async function pdfToImage(file, outputFmt, quality) {
+  // We'll use PDF.js from CDN
+  await animateProgress(30, 50, 400, 'Memuat PDF...');
+  if (!window.pdfjsLib) {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+  const ab = await readFileAsArrayBuffer(file);
+  const pdf = await pdfjsLib.getDocument({data: ab}).promise;
+  const page = await pdf.getPage(1);
+  const scale = 2;
+  const vp = page.getViewport({scale});
+  const canvas = document.createElement('canvas');
+  canvas.width = vp.width; canvas.height = vp.height;
+  const ctx = canvas.getContext('2d');
+  await animateProgress(50, 75, 600, 'Merender halaman...');
+  await page.render({canvasContext:ctx, viewport:vp}).promise;
+  await animateProgress(75, 80, 200, 'Menyimpan...');
+  const blob = await canvasToBlob(canvas, mimeFromFmt(outputFmt), quality);
+  const base = file.name.replace(/\.[^.]+$/,'');
+  return { blob, filename: `${base}.${extFromFmt(outputFmt)}` };
+}
+
+async function resizeImage(file, outputFmt, quality) {
+  await animateProgress(30, 60, 400, 'Resize gambar...');
+  const src = await readFileAsDataURL(file);
+  const img = await loadImage(src);
+  // Scale to 50% as demo; in production you'd have width/height inputs
+  const scale = parseInt(document.getElementById('qualitySlider').value) / 100;
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(img.width * scale);
+  canvas.height = Math.round(img.height * scale);
+  const ctx = canvas.getContext('2d');
+  if (outputFmt === 'JPG') { ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); }
+  ctx.drawImage(img, 0,0,canvas.width,canvas.height);
+  await animateProgress(60,80,200,'Menyimpan...');
+  const blob = await canvasToBlob(canvas, mimeFromFmt(outputFmt), quality);
+  const base = file.name.replace(/\.[^.]+$/,'');
+  return { blob, filename: `${base}_resized.${extFromFmt(outputFmt)}` };
+}
+
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    const s = document.createElement('script'); s.src = src;
+    s.onload = res; s.onerror = rej; document.head.appendChild(s);
+  });
+}
+
+// Update quality label text for resize
+document.getElementById('qualitySlider').addEventListener('input', function() {
+  if (currentTool?.category === 'resize') {
+    document.getElementById('qualityVal').textContent = this.value + '%';
+  }
+});
+</script>
+</body>
+</html>
